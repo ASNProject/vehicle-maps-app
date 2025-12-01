@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Realtime</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        Vehicle Realtime Tracking
+    </div>
+
+    <!-- Content container -->
+    <div class="content-container">
+        <div class="info-panel">
+            <p>Vehicle Status: <span id="status">Active</span></p>
+            <p>Latitude: <span id="lat">-</span></p>
+            <p>Longitude: <span id="lon">-</span></p>
+        </div>
+
+        <!-- Map -->
+        <div id="map"></div>
+    </div>
+
+    <!-- Script Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Script JavaScript Code -->
+    <script src="src/js/script.js"></script>
+</body>
+</html>
