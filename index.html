@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +7,60 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="src/css/style.css">
-</head>
+    </head>
 
 <body>
-    <!-- Header -->
     <div class="header">
-        Vehicle Realtime Tracking
+        <span>Monitoring Tekanan Udara Ban</span>
+        <button id="history-btn" onclick="window.location.href='src/screens/history.html'">History</button>
     </div>
 
-    <!-- Content container -->
     <div class="content-container">
+        
         <div class="info-panel">
-            <p>Vehicle Status: <span id="status">Active</span></p>
-            <p>Latitude: <span id="lat">-</span></p>
-            <p>Longitude: <span id="lon">-</span></p>
+            <div class="road-container">
+                <div class="center-line"></div>
+                <div class="car-container">
+                    <img src="src/assets/cars.png" alt="Mobil" class="car-image">
+                    
+                    <div class="pressure-box fl">
+                        <span>TEKANAN FL</span>
+                    </div>
+                    <div class="pressure-box fr-text-mismatch"> 
+                        <span>TEKANAN RL</span>
+                    </div>
+                    <div class="pressure-box rl">
+                        <span>TEKANAN RL</span>
+                    </div>
+                    <div class="pressure-box rr">
+                        <span>TEKANAN RR</span>
+                    </div>
+
+                    <!-- Status Kotak -->
+                    <div class="status-box fl-status">
+                        <span>BAGUS</span>
+                    </div>
+                    <div class="status-box fr-status">
+                        <span>BAGUS</span>
+                    </div>
+                    <div class="status-box rl-status">
+                        <span>BAGUS</span>
+                    </div>
+                    <div class="status-box rr-status">
+                        <span>BAGUS</span>
+                    </div>
+                                        
+                </div>
+                <div class="road-edge left-edge"></div>
+                <div class="road-edge right-edge"></div>
+                
+            </div>
         </div>
 
-        <!-- Map -->
         <div id="map"></div>
     </div>
 
-    <!-- Script Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Script JavaScript Code -->
     <script src="src/js/script.js"></script>
 </body>
 </html>

@@ -18,3 +18,5 @@
 
 ### [added]
 - Add maps realtime tracking
+- Add tire pressure
+- Add history tire pressure

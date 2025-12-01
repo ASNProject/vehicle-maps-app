@@ -1,0 +1,53 @@
+<!--
+ Copyright 2025 ariefsetyonugroho
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     https://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>History Tekanan Ban</title>
+</head>
+<body>
+
+    <h2>History Tekanan Ban</h2>
+
+    <button id="export-btn">Export ke Excel</button>
+
+    <table id="history-table">
+        <thead>
+            <tr>
+                <th>Ban</th>
+                <th>Status</th>
+                <th>Tekanan</th>
+                <th>Waktu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan diisi JS -->
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button id="prev-page">Prev</button>
+        <span id="page-info">1 / 1</span>
+        <button id="next-page">Next</button>
+    </div>
+
+    <script src="../js/history.js"></script>
+</body>
+</html>

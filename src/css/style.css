@@ -1,13 +1,10 @@
 /**
  * Copyright 2025 ariefsetyonugroho
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- *     https://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
+ * * https://www.apache.org/licenses/LICENSE-2.0
+ * * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -18,6 +15,11 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    display: flex; 
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f0f0; 
+    overflow-x: hidden; 
 }
 
 /* Header */
@@ -28,24 +30,309 @@ body {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+    width: 100%; 
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
 }
 
 /* Container untuk content + map */
 .content-container {
     display: flex;
     flex-direction: column; 
-    height: calc(100vh - 60px); 
+    flex-grow: 1;
+    width: 100%;
 }
 
 /* Info panel di atas map */
 .info-panel {
     background: #f8f9fa;
-    padding: 10px;
     border-bottom: 1px solid #ddd;
+    min-height: 200px; 
+    height: 50vh;
+    max-height: 400px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    box-sizing: border-box;
+
 }
 
 /* Map container */
 #map {
-    height: calc(100vh - 60px); 
+    flex-grow: 1; 
     width: 100%;
+    min-height: 200px; 
+}
+
+.road-container {
+    position: relative;
+    width: 100%; 
+    height: 100%; 
+    background-color: #333; 
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px 0; 
+    box-sizing: border-box;
+}
+
+.center-line {
+    position: absolute;
+    width: 4px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        white,
+        white 20px,
+        transparent 20px,
+        transparent 40px
+    );
+    z-index: 1;
+}
+
+.road-edge {
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    background-color: white;
+    z-index: 1;
+}
+
+.left-edge {
+    left: 8%;
+}
+
+.right-edge {
+    right: 8%;
+}
+
+.car-container {
+    position: absolute;
+    width: 70%; 
+    max-width: 300px; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.car-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.pressure-box {
+    position: absolute;
+    background-color: #4a90e2; 
+    color: white;
+    padding: 5px; 
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    width: 60px; 
+    height: 30px;
+    font-size: 10px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Penempatan Kotak Tekanan */
+
+/* Kiri Depan (FL) */
+.fl {
+    top: 20%;
+    left: -5%;
+}
+
+/* Kanan Depan (FR/Teks RL) */
+.fr-text-mismatch {
+    top: 20%;
+    right: -5%;
+}
+
+/* Kiri Belakang (RL) */
+.rl {
+    bottom: 20%;
+    left: -5%;
+}
+
+/* Kanan Belakang (RR) */
+.rr {
+    bottom: 20%;
+    right: -5%;
+}
+
+#history-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#history-btn:hover {
+    background-color: #e0a800;
+    color: white;
+}
+
+/* Kotak status */
+.status-box {
+    position: absolute;
+    background-color: #28a745; /* hijau bagus */
+    color: white;
+    font-weight: bold;
+    font-size: 9px;
+    text-align: center;
+    padding: 3px 5px;
+    border-radius: 50%; /* jadi lingkaran */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    z-index: 3;
+}
+
+/* Kiri Depan (FL) */
+.fl-status {
+    top: 20%;
+    left: -20%;
+}
+
+/* Kanan Depan (FR) */
+.fr-status {
+    top: 20%;
+    right: -20%;
+}
+
+/* Kiri Belakang (RL) */
+.rl-status {
+    bottom: 20%;
+    left: -20%;
+}
+
+/* Kanan Belakang (RR) */
+.rr-status {
+    bottom: 20%;
+    right: -20%;
+}
+
+h2 {
+    margin: 0;
+    background: #0d6efd;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+#export-btn {
+    display: block;
+    right: 0;
+    margin: 10px auto 20px auto;
+    padding: 8px 15px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#export-btn:hover {
+    background-color: #0b5ed7;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #e9ecef;
+}
+
+.pagination {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.pagination button:hover {
+    background-color: #e9ecef;
+}
+
+@media (max-width: 768px) {
+    .header {
+        font-size: 18px;
+    }
+    
+    .info-panel {
+        height: 50vh; 
+    }
+    
+    .car-container {
+        width: 80%;
+    }
+
+    .pressure-box {
+        width: 50px;
+        height: 40px;
+        font-size: 9px;
+    }
+
+    .fl {
+        left: -5%;
+    }
+
+    .fr-text-mismatch {
+        right: -5%;
+    }
+
+    .rl {
+        left: -5%;
+    }
+
+    .rr {
+        right: -5%;
+    }
+
+    .status-box {
+        width: 25px;
+        height: 25px;
+        font-size: 8px;
+    }
+
+    .fl-status { left: -1%; top: 5%; }
+    .fr-status { right: -1%; top: 5%; }
+    .rl-status { left: -1%; bottom: 5%; }
+    .rr-status { right: -1%; bottom: 5%; }
 }
