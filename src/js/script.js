@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Initialize the map
 const map = L.map('map').setView([0, 0], 2);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,35 +20,35 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let maker = null;
 
-// TODO = Delete this function when using real API ==
-// Dummy JSON object (simulasi API)
-let vehicleJSON = {
-    "latitude": -6.2002,
-    "longitude": 106.8166
-};
+// const API_URL = 'https://api.tirepressure.my.id/api/tire-pressure';
 
-function fetchDummyJSON() {
-    // Simulate movement: acak kecil setiap detik
-    vehicleJSON.latitude += (Math.random() - 0.5) * 0.0005;
-    vehicleJSON.longitude += (Math.random() - 0.5) * 0.0005;
-
-    // Kembalikan "JSON" seperti API
-    return Promise.resolve(vehicleJSON);
-}
-// ====================================================
-
-const API_URL = 'dummy.json';
-
-// Update vehicle location
+// Update vehicle location + UI pressure info
 function updateLocation() {
-    // TODO: Replace with actual API endpoint (fetch)
-    // fetch(API_URL)
-    fetchDummyJSON()
-    // TODO: Uncomment the line below when using real API
-        // .then(response => response.json())
-        .then(data => {
-            const lat = data.latitude;
-            const lon = data.longitude;
+    fetch(API_URL)
+        .then(response => response.json())
+        .then(json => {
+            const list = json.data.data;
+
+            if (!Array.isArray(list) || list.length === 0) {
+                console.warn("Tidak ada data kendaraan. Tunggu data masuk...");
+                return;
+            }
+
+            const v = list[0]; // Ambil data pertama
+
+            console.log("API result:", v);
+
+            // ========================
+            // UPDATE MAP
+            // ========================
+
+            if (!v.latitude || !v.longitude) {
+                console.error("Data kendaraan tidak punya lat/lon:", v);
+                return;
+            }
+
+            const lat = v.latitude;
+            const lon = v.longitude;
 
             if (maker) {
                 maker.setLatLng([lat, lon]);
@@ -57,6 +56,34 @@ function updateLocation() {
                 maker = L.marker([lat, lon]).addTo(map);
                 map.setView([lat, lon], 16);
             }
+
+            // ========================
+            // UPDATE TEKANAN BAN
+            // ========================
+
+            document.querySelector(".pressure-box.fl span").textContent = v.front_left + " PSI";
+            document.querySelector(".pressure-box.rl span").textContent = v.rear_left + " PSI";
+            document.querySelector(".pressure-box.rr span").textContent = v.rear_right + " PSI";
+
+            // Kelas FR kamu salah, diganti jadi pressure-box fr
+            const frBox = document.querySelector(".pressure-box.fr-text-mismatch span");
+            if (frBox) frBox.textContent = v.front_right + " PSI";
+
+            // ========================
+            // UPDATE STATUS BAN
+            // ========================
+
+            document.querySelector(".fl-status span").textContent = v.status_front_left;
+            document.querySelector(".fr-status span").textContent = v.status_front_right;
+            document.querySelector(".rl-status span").textContent = v.status_rear_left;
+            document.querySelector(".rr-status span").textContent = v.status_rear_right;
+
+            // ========================
+            // UPDATE SPEED
+            // ========================
+
+            document.querySelector(".speed-number").textContent = v.speed;
+
         })
         .catch(error => console.error('Error fetching vehicle data:', error));
 }

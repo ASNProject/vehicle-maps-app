@@ -28,26 +28,31 @@
 
     <button id="export-btn">Export ke Excel</button>
 
-    <table id="history-table">
+    <table id="history-table" border="1">
         <thead>
             <tr>
-                <th>Ban</th>
-                <th>Status</th>
-                <th>Tekanan</th>
+                <th>FL</th>
+                <th>Status FL</th>
+                <th>FR</th>
+                <th>Status FR</th>
+                <th>RL</th>
+                <th>Status RL</th>
+                <th>RR</th>
+                <th>Status RR</th>
+                <th>Speed</th>
                 <th>Waktu</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Data akan diisi JS -->
-        </tbody>
+        <tbody></tbody>
     </table>
+
 
     <div class="pagination">
         <button id="prev-page">Prev</button>
         <span id="page-info">1 / 1</span>
         <button id="next-page">Next</button>
     </div>
-
+    <script src="../js/config.js"></script>
     <script src="../js/history.js"></script>
 </body>
 </html>
