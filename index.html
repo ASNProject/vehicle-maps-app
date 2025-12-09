@@ -11,8 +11,12 @@
 
 <body>
     <div class="header">
-        <span>Monitoring Tekanan Udara Ban</span>
-        <button id="history-btn" onclick="window.location.href='src/screens/history.html'">History</button>
+        <span class="title">Monitoring Tekanan Udara Ban</span>
+
+        <div class="header-actions">
+            <button id="history-btn" onclick="window.location.href='history.html'">History</button>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
     </div>
 
     <div class="content-container">
@@ -72,5 +76,10 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="src/js/config.js"></script>
     <script src="src/js/script.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script>
+        checkAuth();  
+    </script>
+
 </body>
 </html>

@@ -13,4 +13,4 @@
 // limitations under the License.
 
 // config.js
-const API_URL = "https://api.tirepressure.my.id/api/tire-pressure";
+const API_URL = "https://api.tirepressure.my.id/api";

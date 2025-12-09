@@ -24,7 +24,7 @@ let maker = null;
 
 // Update vehicle location + UI pressure info
 function updateLocation() {
-    fetch(API_URL)
+    fetch(`${API_URL}/tire-pressure`)
         .then(response => response.json())
         .then(json => {
             const list = json.data.data;

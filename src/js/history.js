@@ -18,7 +18,7 @@ let lastVehicleData = null; // simpan data API terakhir
 
 async function loadTable() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/tire-pressure`);
         const json = await response.json();
 
         const vehicle = json.data.data[0]; 
@@ -85,4 +85,27 @@ document.getElementById("export-btn").addEventListener("click", () => {
     link.click();
     document.body.removeChild(link);
 });
+
+document.getElementById("delete-all-btn").addEventListener("click", async () => {
+    if (!confirm("Yakin ingin menghapus semua data history?")) return;
+
+    try {
+        const response = await fetch(API_URL + "/history/truncate", {
+            method: "DELETE"
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Semua data berhasil dihapus!");
+            loadHistory(); // refresh tabel
+        } else {
+            alert("Gagal menghapus data!");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Terjadi error saat menghapus data.");
+    }
+});
+
 
