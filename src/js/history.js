@@ -21,31 +21,32 @@ async function loadTable() {
         const response = await fetch(`${API_URL}/tire-pressure`);
         const json = await response.json();
 
-        const vehicle = json.data.data[0]; 
-        lastVehicleData = vehicle; // simpan untuk export
+        const vehicles = json.data.data; 
+        lastVehicleData = vehicles; // simpan untuk export
 
         const tbody = document.querySelector("#history-table tbody");
         tbody.innerHTML = "";
 
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${vehicle.front_left}</td>
-            <td>${vehicle.status_front_left}</td>
+       vehicles.forEach(vehicle => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${vehicle.front_left}</td>
+                <td>${vehicle.status_front_left}</td>
 
-            <td>${vehicle.front_right}</td>
-            <td>${vehicle.status_front_right}</td>
+                <td>${vehicle.front_right}</td>
+                <td>${vehicle.status_front_right}</td>
 
-            <td>${vehicle.rear_left}</td>
-            <td>${vehicle.status_rear_left}</td>
+                <td>${vehicle.rear_left}</td>
+                <td>${vehicle.status_rear_left}</td>
 
-            <td>${vehicle.rear_right}</td>
-            <td>${vehicle.status_rear_right}</td>
+                <td>${vehicle.rear_right}</td>
+                <td>${vehicle.status_rear_right}</td>
 
-            <td>${vehicle.speed} Km/h</td>
-            <td>${formatTime(vehicle.created_at)}</td>
-        `;
-
-        tbody.appendChild(tr);
+                <td>${vehicle.speed} Km/h</td>
+                <td>${formatTime(vehicle.created_at)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
 
     } catch (error) {
         console.error("Gagal load data:", error);
@@ -64,23 +65,30 @@ loadTable();
 // EXPORT CSV PERBAIKAN
 // =========================
 document.getElementById("export-btn").addEventListener("click", () => {
-    if (!lastVehicleData) {
-        alert("Data belum dimuat, coba beberapa detik lagi...");
+    if (!lastVehicleData || lastVehicleData.length === 0) {
+        alert("Data belum dimuat atau kosong!");
         return;
     }
 
     let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Ban,Status,Tekanan,Speed,Waktu\n";
+    csvContent += "FL,Status FL,FR,Status FR,RL,Status RL,RR,Status RR,Speed,Waktu\n";
 
-    csvContent += `FL,${lastVehicleData.status_front_left},${lastVehicleData.front_left},${lastVehicleData.speed},${formatTime(lastVehicleData.created_at)}\n`;
-    csvContent += `FR,${lastVehicleData.status_front_right},${lastVehicleData.front_right},${lastVehicleData.speed},${formatTime(lastVehicleData.created_at)}\n`;
-    csvContent += `RL,${lastVehicleData.status_rear_left},${lastVehicleData.rear_left},${lastVehicleData.speed},${formatTime(lastVehicleData.created_at)}\n`;
-    csvContent += `RR,${lastVehicleData.status_rear_right},${lastVehicleData.rear_right},${lastVehicleData.speed},${formatTime(lastVehicleData.created_at)}\n`;
+    lastVehicleData.forEach(vehicle => {
+        csvContent += `
+${vehicle.front_left},${vehicle.status_front_left},
+${vehicle.front_right},${vehicle.status_front_right},
+${vehicle.rear_left},${vehicle.status_rear_left},
+${vehicle.rear_right},${vehicle.status_rear_right},
+${vehicle.speed},
+${formatTime(vehicle.created_at)}
+`.replace(/\n/g, "");
+        csvContent += "\n";
+    });
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "history_tekanan_ban.csv");
+    link.href = encodedUri;
+    link.download = "history_tekanan_ban.csv";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
